@@ -1,5 +1,15 @@
 # Changelog
 
+## [2026-11-20] - Serve the Site From dartalib.tech
+
+**What changed:** Set the Pages custom domain to `dartalib.tech` via `gh api PUT /repos/TalibMushtaq/TalibMushtaq.github.io/pages`, and rewrote the "Custom domain" section of `README.md` with the required A/AAAA/`www` CNAME records.
+
+**Why:** The project needs a branded URL; `dartalib.tech` was already registered to this account but its apex pointed at an unreachable Azure host (`20.235.90.230`) and `www` pointed back at the apex, which breaks HTTPS.
+
+**Impact:** Pages now serves from `https://dartalib.tech/`, and `https://talibmushtaq.github.io/` 301-redirects to it. No `CNAME` file is committed — Actions-based publishing ignores build-output `CNAME` files, so the domain lives only in the repository's Pages settings.
+
+**Follow-ups:** HTTPS enforcement stays off until GitHub issues the Let's Encrypt certificate for the new domain; re-enable it once `https_certificate.state` is `approved`.
+
 ## [2026-11-20] - Bump Pages Workflow Actions to Node 24 Runtimes
 
 **What changed:** Updated `.github/workflows/deploy.yml` to `actions/checkout@v7`, `actions/setup-node@v7`, `actions/configure-pages@v6`, `actions/upload-pages-artifact@v5`, and `actions/deploy-pages@v5`.

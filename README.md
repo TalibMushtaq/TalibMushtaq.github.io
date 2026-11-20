@@ -2,7 +2,7 @@
 
 Personal portfolio — React 19 + Vite.
 
-Live at **https://talibmushtaq.github.io/**
+Live at **https://dartalib.tech/** · `https://talibmushtaq.github.io/` redirects there.
 
 ## Develop
 
@@ -21,10 +21,18 @@ and publishes `dist/` to GitHub Pages via Actions. No build output is committed.
 
 ## Custom domain
 
-`talibmushtaq.me` is not in use (its registration lapsed). To re-enable it:
+The site is served from `dartalib.tech` (apex, registered at Namify; DNS managed
+by ResellerClub/LogicBoxes nameservers). The domain is configured in
+Settings → Pages, so no `CNAME` file is needed — files in the build output are
+ignored for Actions-based publishing.
 
-1. Renew the domain and point DNS at GitHub Pages — `A` records to
-   `185.199.108.153`, `.109.153`, `.110.153`, `.111.153`, and `CNAME www` to
-   `talibmushtaq.github.io`.
-2. Add the domain under Settings → Pages (this creates a `CNAME` file).
-3. If using a `CNAME` file, place it in `public/` so Vite copies it into `dist/`.
+Required DNS records:
+
+| Type | Host | Value |
+|---|---|---|
+| A | `@` | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` |
+| AAAA | `@` | `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153` |
+| CNAME | `www` | `talibmushtaq.github.io` |
+
+`www` must point at `talibmushtaq.github.io`; pointing it at the apex breaks
+HTTPS. GitHub handles the `www` → apex redirect itself.
