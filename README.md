@@ -7,8 +7,8 @@ Live at **https://dartalib.tech/** · `https://talibmushtaq.github.io/` redirect
 ## Stack
 
 - Vue 3 (`<script setup>`, Composition API)
-- Vue Router 5 with hash history, so deep links work on GitHub Pages without a
-  server-side rewrite
+- Vue Router 5 with HTML5 history; the build emits a copy of `index.html` for
+  `/projects`, `/contact` and `404.html` so deep links resolve on static hosting
 - Vite 8, oxlint
 
 ## Structure
@@ -18,7 +18,7 @@ index.html              shell: fonts, meta, pre-paint theme script
 src/
   main.js               mount point
   App.vue               router outlet + custom cursor + route transition
-  router/index.js       /, /projects, /contact (hash history) and titles
+  router/index.js       /, /projects, /contact (history mode) and titles
   styles/theme.css      design tokens, dark palette, base styles, focus states
   composables/useTheme.js   light/dark state persisted to localStorage
   data/site.js          name, socials, contact platforms, project list
@@ -27,6 +27,7 @@ src/
     NavBar.vue          accent bar with links and theme toggle
     ThemeToggle.vue     shared light/dark switch
     BadgeColumn.vue     accent column with the rotating nameplate + avatar
+    ScriptT.vue         shared script T mark (navbar + badge)
   views/
     Home.vue            split hero: badge column + intro copy
     Projects.vue        full-height strips that expand on hover
@@ -35,6 +36,10 @@ src/
 
 Content lives in `src/data/site.js`; change copy in the view files. `site.email`
 is intentionally empty — fill it in and the Email row on the contact page appears.
+
+`scripts/spa-fallback.mjs` copies the built `index.html` into one directory per
+route (and `404.html`), because GitHub Pages does not rewrite paths to the SPA.
+Add new routes to that list as well as to the router.
 
 ## Development
 
