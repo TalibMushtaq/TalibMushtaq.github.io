@@ -1,7 +1,7 @@
-// Hash history keeps deep links working on GitHub Pages, which has no server-side
-// rewrite for /projects or /contact. Switching to web history later only needs a
-// 404.html fallback.
-import { createRouter, createWebHashHistory } from 'vue-router'
+// Clean paths (no `#/`) for GitHub Pages. Pages has no server-side rewrite, so the
+// build copies index.html to 404.html; Pages serves that for /projects and /contact
+// and the router takes over. See the `build` script in package.json.
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
@@ -27,7 +27,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
   // Route changes should always land at the top of the page.
   scrollBehavior: () => ({ top: 0 }),
