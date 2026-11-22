@@ -1,0 +1,166 @@
+/*
+ * Theme tokens and base styles for the whole site. The split-screen palette is the
+ * source of truth: a warm panel block on the left, a near-black ink surface on the
+ * right, and a single amber accent shared by headings, buttons and the cursor dot.
+ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light;
+
+  /* Left colour block and the type that sits on it. Stays amber in both themes. */
+  --panel: #f5a524;
+  --on-panel: #1c1917;
+
+  /* Right side of the split — this is what the theme toggle repaints. */
+  --surface: #faf3e6;
+  --on-surface: #1c1917;
+
+  /* Constant cream, used for type over the coloured project strips. */
+  --text: #faf3e6;
+
+  /* Accent for headings, buttons and the cursor dot. --accent-text is a darker
+     shade of the same hue, because raw amber on cream is only ~1.9:1 contrast. */
+  --accent: #f5a524;
+  --on-accent: #1c1917;
+  --accent-text: #a65d00;
+
+  /* Derived aliases: component styles talk in roles, not raw hex. */
+  --bg-primary: var(--surface);
+  --text-primary: var(--on-surface);
+  --text-secondary: rgba(28, 25, 23, 0.62);
+  --accent-contrast: var(--on-accent);
+  --cursor-color: var(--accent);
+  --toggle-color: var(--on-panel);
+  --border-on-panel: rgba(28, 25, 23, 0.4);
+
+  /* Shared entrance animation: sections rise into place on mount. */
+  --animation-initial: rotateX(90deg) scale(1.35);
+  --animation: dropIn 0.7s cubic-bezier(0.04, 0.33, 0.1, 1) forwards;
+
+  --nav-height: 4rem;
+}
+
+/* Dark mode flips the right-hand surface to ink and the type to cream; the amber
+   block and its dark mark stay put so the split composition reads the same. */
+:root.dark {
+  color-scheme: dark;
+  --surface: #1c1917;
+  --on-surface: #faf3e6;
+  --accent-text: var(--accent);
+  --text-secondary: rgba(250, 243, 230, 0.62);
+}
+
+@keyframes dropIn {
+  0% {
+    opacity: 0;
+    transform: rotateX(50deg) translateZ(-2rem);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0) translateY(0) translateZ(0);
+  }
+}
+
+html {
+  background: var(--bg-primary);
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: "Jost", Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+svg {
+  height: 1.25rem;
+}
+
+a {
+  color: inherit;
+}
+
+/*
+ * Custom cursor. The blended dot only replaces the pointer on devices that
+ * actually have a fine pointer and no reduced-motion preference; App.vue adds
+ * `custom-cursor` to <body> under those conditions.
+ */
+body.custom-cursor,
+body.custom-cursor * {
+  cursor: none;
+}
+
+body.custom-cursor::before {
+  content: "";
+  position: fixed;
+  z-index: 999;
+  top: var(--y, 0);
+  left: var(--x, 0);
+  width: var(--size, 1.5em);
+  height: var(--size, 1.5em);
+  border-radius: 50%;
+  background: var(--cursor-color);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(var(--scale, 1));
+  transition: transform 0.2s ease-out, background 0.3s ease;
+}
+
+/* Hovering something clickable makes the dot grow, clicking squashes it. */
+body.cursor-hot::before {
+  --scale: 1.7;
+}
+
+body.cursor-down::before {
+  --scale: 0.8;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+::-webkit-scrollbar {
+  width: 0.7em;
+  background-color: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border: 0.2em solid var(--bg-primary);
+  border-radius: 1em;
+}
+
+/* Keyboard focus must stay obvious even though the pointer is custom-drawn. */
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Respect users who ask the OS to reduce motion: no spinning, no drop-ins. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

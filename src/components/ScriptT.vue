@@ -1,0 +1,15 @@
+<script setup>
+// Shared script "T" mark (source: public/script-t-favicon.svg). Kept as a
+// component so the navbar and the home badge cannot drift apart; the path is
+// filled with currentColor so each surface can theme it.
+</script>
+
+<template>
+  <svg viewBox="0 0 881 710" role="img" aria-label="Talib Mushtaq">
+    <path
+      fill="currentColor"
+      transform="translate(0 710) scale(1 -1)"
+      d="M534 700C243 700 117 499 117 405C117 339 162 301 232 301C333 301 422 377 422 485C422 523 412 563 391 604L378 600C383 578 386 563 386 554C386 467 297 318 210 318C163 318 132 359 132 404C132 524 308 673 455 673C563 673 661 593 744 593C808 593 854 624 881 686L869 694C852 675 827 666 792 666C713 666 636 700 534 700ZM42 69C42 117 150 89 150 160C150 189 120 215 86 215C34 215 0 171 0 122C0 39 75 -10 170 -10C595 -10 540 472 663 571L655 583C375 417 386 6 160 6C111 6 42 31 42 69Z"
+    />
+  </svg>
+</template>

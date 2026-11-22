@@ -5,10 +5,42 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Talib Mushtaq</title>
-    <meta name="description" content="Talib Mushtaq — portfolio." />
+    <meta
+      name="description"
+      content="Talib Mushtaq — full-stack developer building web apps with TypeScript, Node.js, React and Vue."
+    />
+
+    <meta property="og:title" content="Talib Mushtaq" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://dartalib.tech/" />
+    <meta
+      property="og:description"
+      content="Talib Mushtaq — full-stack developer building web apps with TypeScript, Node.js, React and Vue."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Applied before the bundle loads so a dark-mode visitor never sees a white
+         flash before Vue mounts. useTheme.js reads the same key afterwards. -->
+    <script>
+      try {
+        var saved = localStorage.getItem("theme");
+        if (
+          saved === "dark" ||
+          (!saved && matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
