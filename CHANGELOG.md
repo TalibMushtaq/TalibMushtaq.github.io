@@ -1,5 +1,15 @@
 # Changelog
 
+## [2026-11-22] - Clean URLs, Route Pages and a Working TLS Certificate
+
+**What changed:** Switched `src/router/index.js` from `createWebHashHistory` to `createWebHistory` and rewrote legacy `#/…` links on load in `src/main.js`. Added `scripts/spa-fallback.mjs` (run by the `build` script) which copies the built `index.html` into `dist/projects/`, `dist/contact/` and `dist/404.html`. Re-provisioned Pages TLS: the custom domain was cleared and re-added through the API, which replaced a stuck certificate request with a fresh one (`state: new` → `approved`), then `https_enforced` was enabled.
+
+**Why:** URLs were showing `dartalib.tech/#/`, and `https://dartalib.tech` failed because GitHub had never issued a certificate — DNS was already correct (four A/AAAA records plus a `www` CNAME), so the request itself was stale.
+
+**Impact:** `https://dartalib.tech/` now serves with a valid Let's Encrypt certificate (expires 2027-02-20), `http://` 301s to `https://`, `www` 301s to the apex, and `/projects` and `/contact` return 200 from their own generated files instead of a 404-status fallback. Unknown deep links still render the SPA through `404.html`. Deploys additionally publish the two route directories.
+
+**Follow-ups:** `scripts/spa-fallback.mjs` hardcodes the route list, so a new route must be added in both the router and that array. Certificate renewal is automatic while the domain stays configured.
+
 ## [2026-11-22] - Use the Script `T` in the Navbar Without the Circle
 
 **What changed:** Added `src/components/ScriptT.vue` holding the supplied script glyph (source `public/script-t-favicon.svg`) as a single reusable `<svg>` with `fill="currentColor"`. `NavBar.vue` now renders `<ScriptT class="mark" />` in place of the bordered circular `T` span — the border, background and hover invert are gone, replaced by a plain `opacity` fade, with the mark sized by height (`2.1rem`) and its natural `881 / 710` aspect. `BadgeColumn.vue` consumes the same component for its monogram layer via nested `<svg x y width height>`.
