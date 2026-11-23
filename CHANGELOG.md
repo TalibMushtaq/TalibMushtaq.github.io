@@ -1,5 +1,15 @@
 # Changelog
 
+## [2026-11-23] - Draw the Mark From 𝓣 and Fix Legacy Hash Links
+
+**What changed:** Replaced the mark outline in `src/components/ScriptT.vue` and `public/favicon.svg` with U+1D4E3 (MATHEMATICAL BOLD SCRIPT CAPITAL T), outlined from Noto Sans Math and scaled per surface (105.7x84 inside the badge ring, 42.8x34 on the 64px favicon tile). The navbar's `aspect-ratio` follows the glyph's tight viewBox (`930 / 739`). Also moved the `#/…` to `/…` rewrite from `src/main.js` into `src/router/index.js`, before `createRouter` reads the initial location.
+
+**Why:** The owner asked for the literal 𝓣 character rather than the previous hand-drawn script outline. The hash fix came from testing: `/#/projects` rewritten after router creation left the app on the home route while the address bar showed `/projects`, because module imports run before the rewrite.
+
+**Impact:** Navbar, home badge and favicon all show the same 𝓣 outline with no font dependency. Old `#/contact` and `#/projects` links now land on the correct page. Favicon keeps the amber tile with ink glyph.
+
+**Follow-ups:** `public/script-t-favicon.svg` is no longer the source of the mark; it can be deleted once the earlier artwork is not needed.
+
 ## [2026-11-22] - Clean URLs, Route Pages and a Working TLS Certificate
 
 **What changed:** Switched `src/router/index.js` from `createWebHashHistory` to `createWebHistory` and rewrote legacy `#/…` links on load in `src/main.js`. Added `scripts/spa-fallback.mjs` (run by the `build` script) which copies the built `index.html` into `dist/projects/`, `dist/contact/` and `dist/404.html`. Re-provisioned Pages TLS: the custom domain was cleared and re-added through the API, which replaced a stuck certificate request with a fresh one (`state: new` → `approved`), then `https_enforced` was enabled.

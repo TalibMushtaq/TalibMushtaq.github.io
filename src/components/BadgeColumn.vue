@@ -56,15 +56,15 @@ onMounted(() => {
     >
       <!-- Static monogram layer, revealed again when the avatar is not hovered. -->
       <svg class="static" viewBox="0 0 200 200" aria-label="Talib Mushtaq">
-        <!-- Script mark from the shared component, sized to sit inside the ring
-             without touching the lettering. -->
+        <!-- 𝓣 mark from the shared component, sized to sit inside the ring without
+             touching the lettering. -->
         <ScriptT
           class="monogram"
           aria-hidden="true"
-          x="48"
-          y="58.1"
-          width="104"
-          height="83.9"
+          x="47.14"
+          y="58"
+          width="105.71"
+          height="84"
         />
       </svg>
 

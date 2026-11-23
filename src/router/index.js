@@ -3,6 +3,13 @@
 // and the router takes over. See the `build` script in package.json.
 import { createRouter, createWebHistory } from 'vue-router'
 
+// Links shared before the switch to history mode look like /#/projects. Normalize
+// them before createRouter reads the initial location, otherwise the app starts on
+// the home route while the address bar claims otherwise.
+if (window.location.hash.startsWith('#/')) {
+  window.history.replaceState(null, '', window.location.hash.slice(1))
+}
+
 const routes = [
   {
     path: '/',

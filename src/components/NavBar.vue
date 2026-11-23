@@ -52,7 +52,7 @@ nav {
   display: block;
   height: 2.1rem;
   width: auto;
-  aspect-ratio: 881 / 710;
+  aspect-ratio: 930 / 739;
   transition: opacity 0.2s;
 }
 
